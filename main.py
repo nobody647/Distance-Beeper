@@ -3,7 +3,6 @@ import socket
 import machine
 import uasyncio as asyncio
 import utime
-import gc
 
 
 switch = machine.Pin(4, machine.Pin.IN, machine.Pin.PULL_UP)
@@ -50,7 +49,6 @@ async def distLoop():
     global dist
     while True:
         dist = getDist()
-        gc.collect()
         await asyncio.sleep(1)
 
 
@@ -76,10 +74,6 @@ async def areWeThereYet():
         await asyncio.sleep(2)
         
 
-print(getDist())
-
-
-
 def run():
     try:
         loop = asyncio.get_event_loop()
@@ -100,3 +94,7 @@ def main():
         else:
             print("zzzzz")
             utime.sleep(2) #replace with esp8266 light sleep?
+
+
+print(getDist())
+main()
