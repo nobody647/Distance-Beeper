@@ -1,0 +1,71 @@
+alright you dumb motherfucker, here's what we're gonna do
+
+we gotta have two functions running at the same time
+when they finish, they need to run again
+the first function is the distance getter
+it basically needs to constantly be running. when it finishes, it updates a global variable
+
+the second function is the blinker
+it turns the led on, waits a fixed time, and then turns it off
+then, it waits for a time based on the distance
+
+
+both of those are gonna loop forever(ish)
+
+i could use some sorta control loop
+async loopity loop{
+	if turned on{
+		dist = getdist()
+		blinky()
+	}else{
+		wait to turn on or something idk
+	}
+}
+
+that seems like an alright idea
+
+yo'll figure this out eventaully
+
+i believe in you 
+
+♥♥♥♥
+
+8/12/18
+
+
+
+
+
+
+
+
+
+
+
+
+8/16/18
+
+alright all of that shit up there is trash
+
+heres what were REALLY gonna do
+
+so basically we got the update function that runs forever asyncroinoustly or whatever
+it updates a global variable
+it just keeps on goin and doesnt stop unless the switch is flipped
+
+then we got the beepy shit
+it also runs asynwhaterverilly and stuff
+it uses the current state of the global variable and doesnt stop until the switch is flipped
+it'll look something like this
+
+async def blinkyShit():
+	while true:
+		beepOn()
+		sleep(50)
+		beepof()
+		sleep(someValueDeterminedByDist)
+
+
+love u bby
+
+😘💖💖💖
