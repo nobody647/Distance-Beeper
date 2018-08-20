@@ -9,6 +9,7 @@ switch = machine.Pin(4, machine.Pin.IN, machine.Pin.PULL_UP)
 beeper = machine.Pin(5, machine.Pin.OUT)
 
 wlan = network.WLAN(network.AP_IF)
+wlan.active(True)
 wlan.ifconfig(("192.168.1.1", "255.255.255.0", "192.168.1.2", "8.8.8.8"))
 wlan.config(essid="ESP")
 wlan.active(True)
@@ -17,17 +18,22 @@ dist = 0
 
 
 def getDist():
-    s = socket.socket()
-    s.connect(("192.168.1.50", 80))
-    s.send("gimme ur data boi")
-    rawdata = s.recv(64) #number of bytes to recieve. should only need like 4, but let's stay on the safe side
+    try:
+        s = socket.socket()
+        s.connect(("192.168.1.50", 80))
+        s.send("gimme ur data boi")
+        rawdata = s.recv(64) #number of bytes to recieve. should only need like 4, but let's stay on the safe side
 
-    stringdata = rawdata.decode("utf-8")
+        stringdata = rawdata.decode("utf-8")
 
-    return int(stringdata)
+        return int(stringdata)
+    except:
+        print("o fuk")
+        return 0
 
 
 def getDelay(dist):
+    wlan.active(True)
     # should return 100 at values < 50, should return 2000 at values > 300
     temp = 38 * dist
     temp = temp/5
@@ -90,11 +96,14 @@ def main():
     while True:
         if isOn():
             print("!!! starting up")
+            machine.freq(160000000)
+            wlan.active(True)
             run()
         else:
             print("zzzzz")
+            wlan.active(False)
+            machine.freq(80000000)
             utime.sleep(2) #replace with esp8266 light sleep?
 
 
-print(getDist())
 main()
