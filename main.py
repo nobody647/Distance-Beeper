@@ -76,8 +76,9 @@ async def areWeThereYet():
     while True:
         if not isOn():
             print("switched off")
+            beeper.value(0) #stop that infernal noise
             return
-        await asyncio.sleep(2)
+        await asyncio.sleep(1)
         
 
 def run():
